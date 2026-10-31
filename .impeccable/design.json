@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T00:00:00Z",
+  "title": "Design System: Bella Gestión",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Rosa Bella", "canonical": "#D6006E", "tonalRamp": ["#3A0A24", "#5E0036", "#8A0050", "#D6006E", "#FF4F9C", "#FFB0D2", "#FFD9EA", "#FFF0F6"] },
+      "primary-container": { "role": "primary", "displayName": "Rosa Pastel de Contenedor", "canonical": "#FFD9EA", "tonalRamp": ["#3A0A24", "#5E0036", "#8A0050", "#D6006E", "#FF4F9C", "#FFB0D2", "#FFD9EA", "#FFF0F6"] },
+      "background": { "role": "neutral", "displayName": "Blanco Rosado", "canonical": "#FFF8FA", "tonalRamp": ["#1D1317", "#251A1F", "#3A2A32", "#85707A", "#E6D3DB", "#FBE9F1", "#FFF8FA", "#FFFFFF"] },
+      "surface-variant": { "role": "neutral", "displayName": "Rosa Neblina", "canonical": "#FBE9F1", "tonalRamp": ["#1D1317", "#251A1F", "#3A2A32", "#85707A", "#E6D3DB", "#FBE9F1", "#FFF8FA", "#FFFFFF"] },
+      "on-surface": { "role": "neutral", "displayName": "Tinta Ciruela", "canonical": "#231A1E", "tonalRamp": ["#231A1E", "#3A2A32", "#5B4651", "#85707A", "#9E8891", "#D6C0C9", "#F1DFE5", "#FFF8FA"] },
+      "error": { "role": "semantic", "displayName": "Rojo Estado", "canonical": "#B3261E", "tonalRamp": ["#410E0B", "#601410", "#8C1D18", "#B3261E", "#DC362E", "#E46962", "#FFB4AB", "#FCEEEE"] },
+      "success": { "role": "semantic", "displayName": "Verde Estado", "canonical": "#1B6B3A", "tonalRamp": ["#0B2D18", "#0F4224", "#1B6B3A", "#2E8A52", "#4FAF72", "#7DD99A", "#B4EDC6", "#E6F8EC"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Reservado; sin uso en la pantalla actual." },
+      "numeric": { "displayName": "Numeric", "purpose": "Cifra principal de la tarjeta destacada, números tabulares." },
+      "headline": { "displayName": "Headline", "purpose": "Título de la barra superior (22/28 allí)." },
+      "title": { "displayName": "Title", "purpose": "Secciones y cifras secundarias." },
+      "body": { "displayName": "Body", "purpose": "Texto corrido y nombres en filas." },
+      "body-strong": { "displayName": "Body strong", "purpose": "Botones, FAB, iniciales, saldos." },
+      "label": { "displayName": "Label", "purpose": "Rótulos de tarjetas y línea de apoyo de filas." }
+    },
+    "shadows": [
+      { "name": "fab-elevation", "value": "elevation: 6 (sombra nativa de Android)", "purpose": "Única elevación real: el botón flotante." }
+    ],
+    "motion": [
+      { "name": "ripple", "value": "android_ripple con el color de texto al 13-20 % de opacidad", "purpose": "Respuesta al toque en botones, FAB y filas." },
+      { "name": "pressed-opacity", "value": "0.9 presionado, 0.5 deshabilitado", "purpose": "Estados de AppButton." }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Filled Button",
+      "kind": "button",
+      "refersTo": "button-filled",
+      "description": "Acción principal en píldora, rosa con texto blanco.",
+      "html": "<button class=\"ds-btn-filled\">Guardar</button>",
+      "css": ".ds-btn-filled { background: #D6006E; color: #FFFFFF; min-height: 48px; padding: 0 24px; border: 1px solid transparent; border-radius: 999px; font: 500 16px/24px Roboto, system-ui, sans-serif; cursor: pointer; } .ds-btn-filled:hover { opacity: 0.9; } .ds-btn-filled:focus-visible { outline: 2px solid #231A1E; outline-offset: 2px; } .ds-btn-filled:active { opacity: 0.9; }"
+    },
+    {
+      "name": "Tonal Button",
+      "kind": "button",
+      "refersTo": "button-tonal",
+      "description": "Acción secundaria con contenedor rosa pastel.",
+      "html": "<button class=\"ds-btn-tonal\">Detalle</button>",
+      "css": ".ds-btn-tonal { background: #FFD9EA; color: #3A0A24; min-height: 48px; padding: 0 24px; border: 1px solid transparent; border-radius: 999px; font: 500 16px/24px Roboto, system-ui, sans-serif; cursor: pointer; } .ds-btn-tonal:hover { opacity: 0.9; } .ds-btn-tonal:focus-visible { outline: 2px solid #231A1E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Outlined Button",
+      "kind": "button",
+      "refersTo": "button-outlined",
+      "description": "Acción terciaria con borde de contorno.",
+      "html": "<button class=\"ds-btn-outlined\">Cancelar</button>",
+      "css": ".ds-btn-outlined { background: transparent; color: #D6006E; min-height: 48px; padding: 0 24px; border: 1px solid #85707A; border-radius: 999px; font: 500 16px/24px Roboto, system-ui, sans-serif; cursor: pointer; } .ds-btn-outlined:hover { background: rgba(214,0,110,0.13); } .ds-btn-outlined:focus-visible { outline: 2px solid #231A1E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Acción de baja jerarquía, como Ver todas.",
+      "html": "<button class=\"ds-btn-text\">Ver todas</button>",
+      "css": ".ds-btn-text { background: transparent; color: #D6006E; min-height: 48px; padding: 0 24px; border: 1px solid transparent; border-radius: 999px; font: 500 16px/24px Roboto, system-ui, sans-serif; cursor: pointer; } .ds-btn-text:hover { background: rgba(214,0,110,0.13); } .ds-btn-text:focus-visible { outline: 2px solid #231A1E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Primary Card",
+      "kind": "card",
+      "refersTo": "card-primary",
+      "description": "Tarjeta destacada con la cifra principal y progreso.",
+      "html": "<div class=\"ds-card-primary\"><span class=\"ds-card-label\">Ventas del mes · datos de muestra</span><span class=\"ds-card-num\">$ 612.300,00</span><div class=\"ds-track\"><div class=\"ds-fill\"></div></div></div>",
+      "css": ".ds-card-primary { background: #D6006E; color: #FFFFFF; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px; font-family: Roboto, system-ui, sans-serif; } .ds-card-label { font: 500 12px/16px Roboto, system-ui, sans-serif; letter-spacing: 0.5px; } .ds-card-num { font: 500 36px/44px Roboto, system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-track { height: 4px; border-radius: 2px; background: rgba(255,255,255,0.3); overflow: hidden; } .ds-fill { width: 68%; height: 4px; border-radius: 2px; background: #FFFFFF; }"
+    },
+    {
+      "name": "Tonal Card",
+      "kind": "card",
+      "refersTo": "card-tonal",
+      "description": "Tarjeta común de métrica en rosa neblina.",
+      "html": "<div class=\"ds-card-tonal\"><span class=\"ds-tc-label\">Por cobrar</span><span class=\"ds-tc-value\">$ 184.500,00</span></div>",
+      "css": ".ds-card-tonal { background: #FBE9F1; color: #231A1E; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 4px; font-family: Roboto, system-ui, sans-serif; } .ds-tc-label { font: 500 12px/16px Roboto, system-ui, sans-serif; letter-spacing: 0.5px; color: #5B4651; } .ds-tc-value { font: 500 18px/24px Roboto, system-ui, sans-serif; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Extended FAB",
+      "kind": "custom",
+      "refersTo": "fab-extended",
+      "description": "Única acción principal flotante, con ícono y etiqueta.",
+      "html": "<button class=\"ds-fab\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"#FFFFFF\"><path d=\"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z\"/></svg>Registrar venta</button>",
+      "css": ".ds-fab { display: inline-flex; align-items: center; gap: 8px; height: 56px; padding: 0 16px; background: #D6006E; color: #FFFFFF; border: none; border-radius: 16px; font: 500 16px/24px Roboto, system-ui, sans-serif; box-shadow: 0 3px 5px rgba(0,0,0,0.2), 0 6px 10px rgba(0,0,0,0.14); cursor: pointer; } .ds-fab:hover { opacity: 0.92; } .ds-fab:focus-visible { outline: 2px solid #231A1E; outline-offset: 2px; }"
+    },
+    {
+      "name": "List Item",
+      "kind": "custom",
+      "refersTo": "list-item",
+      "description": "Fila de clienta con avatar de iniciales, estado y saldo.",
+      "html": "<div class=\"ds-li\"><span class=\"ds-li-avatar\">MG</span><span class=\"ds-li-texts\"><span class=\"ds-li-title\">Marta Giménez</span><span class=\"ds-li-sub\">Vencido hace 3 días</span></span><span class=\"ds-li-trail\">$ 62.000,00</span></div>",
+      "css": ".ds-li { display: flex; align-items: center; gap: 16px; min-height: 64px; padding: 8px 0; color: #231A1E; font-family: Roboto, system-ui, sans-serif; } .ds-li:hover { background: rgba(214,0,110,0.13); } .ds-li-avatar { width: 40px; height: 40px; border-radius: 50%; background: #FFD9EA; color: #3A0A24; display: flex; align-items: center; justify-content: center; font: 500 16px/24px Roboto, system-ui, sans-serif; } .ds-li-texts { flex: 1; display: flex; flex-direction: column; } .ds-li-title { font: 400 16px/24px Roboto, system-ui, sans-serif; } .ds-li-sub { font: 500 12px/16px Roboto, system-ui, sans-serif; letter-spacing: 0.5px; color: #B3261E; } .ds-li-trail { font: 500 16px/24px Roboto, system-ui, sans-serif; font-variant-numeric: tabular-nums; color: #B3261E; }"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "top-bar",
+      "description": "Barra superior de 64 dp que se tiñe al desplazar.",
+      "html": "<div class=\"ds-topbar\">Bella Gestión</div>",
+      "css": ".ds-topbar { height: 64px; padding: 0 16px; display: flex; align-items: center; background: #FFF8FA; color: #231A1E; font: 500 22px/28px Roboto, system-ui, sans-serif; } .ds-topbar:hover { background: #FBE9F1; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La app estándar, bien hecha",
+    "overview": "Material 3 ejecutado con prolijidad total y una sola decisión propia: un rosa intenso. No hay disfraz de libreta, cartel ni filete; la usuaria eligió la salida estándar de la categoría y el sistema la respeta. La identidad vive en un único color y en la disciplina del resto: espaciado en pasos de 4 y 8, tipografía del sistema, formas redondeadas y tonos en lugar de sombras.\n\nEl rosa #D6006E es provisorio. Lo pidió la usuaria como parecido a la familia de Mary Kay, sin copiar nombre, logo ni corona. Se cambia en un solo lugar (palette.pink600). No se verificó en dispositivo ni emulador Android; las capturas fueron de la vista previa web.\n\nLa pantalla es densa en datos y calma en forma: cifras grandes con números tabulares, texto en tinta ciruela, rojo y verde reservados a estados.",
+    "keyCharacteristics": [
+      "Un solo acento (rosa), con tema claro y oscuro de igual jerarquía.",
+      "Tipografía del sistema Android, sin fuentes propias; respeta el tamaño de letra de la usuaria.",
+      "Profundidad por tono (superficies teñidas), no por sombra, salvo el botón flotante.",
+      "Objetivos táctiles de 48 dp o más.",
+      "Íconos de Material (MaterialIcons), sin decorativos."
+    ],
+    "rules": [
+      { "name": "The One Pink Rule", "body": "El rosa es el único acento. Rojo y verde solo comunican estado, nunca decoran.", "section": "colors" },
+      { "name": "The Tinted Neutral Rule", "body": "Fondos, superficies y textos llevan matiz rosa; no se usa gris neutro ni negro puro.", "section": "colors" },
+      { "name": "The Role Rule", "body": "El código usa roles (primary, onSurface, surfaceVariant), no hex sueltos; los colores se leen de useTheme().", "section": "colors" },
+      { "name": "The Tabular Money Rule", "body": "Todo importe usa números tabulares y una línea; las cifras grandes se reducen con adjustsFontSizeToFit antes de partirse.", "section": "typography" },
+      { "name": "The System Type Rule", "body": "No se agregan fuentes; el tamaño sigue la configuración del sistema.", "section": "typography" },
+      { "name": "The Tone Not Shadow Rule", "body": "La profundidad se expresa cambiando de superficie; la sombra se reserva para la única acción flotante.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do tomar colores de useTheme() por rol y probar siempre claro y oscuro.",
+      "Do usar solo los pasos 4 / 8 / 16 / 24 / 32 y los radios 8 / 16 / 24 / píldora.",
+      "Do formatear dinero con formatArs (src/core/money/formatArs.ts) y mostrarlo en números tabulares.",
+      "Do marcar datos de muestra como tales mientras no haya datos reales.",
+      "Do mantener 48 dp mínimos en todo lo pulsable."
+    ],
+    "donts": [
+      "Don't introducir un segundo acento ni usar rojo o verde como decoración.",
+      "Don't agregar fuentes propias ni fijar tamaños que ignoren la escala del sistema.",
+      "Don't usar gris puro, negro puro ni sombras para crear jerarquía.",
+      "Don't copiar nombre, logo ni corona de Mary Kay; el rosa es solo parecido de familia."
+    ]
+  }
+}
