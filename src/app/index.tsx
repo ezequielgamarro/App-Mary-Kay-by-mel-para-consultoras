@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View, type NativeScrollEvent } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -38,6 +39,7 @@ function isScrolled(event: NativeScrollEvent): boolean {
 /** Pantalla provisoria: muestra la identidad nueva antes de construir los módulos reales. */
 export default function Index() {
   const { colors } = useTheme();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
 
   return (
@@ -82,7 +84,7 @@ export default function Index() {
 
         <View style={styles.sectionHeader}>
           <AppText variant="title">Clientas</AppText>
-          <AppButton label="Ver todas" variant="text" onPress={() => undefined} />
+          <AppButton label="Ver todas" variant="text" onPress={() => router.push('/clientas')} />
         </View>
         {SAMPLE.clients.map((client) => (
           <AppListItem

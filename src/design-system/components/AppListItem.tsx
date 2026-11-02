@@ -7,7 +7,7 @@ import { AppText, type AppTextColor } from './AppText';
 type AppListItemProps = {
   title: string;
   supporting: string;
-  trailing: string;
+  trailing?: string;
   supportingColor?: AppTextColor;
   trailingColor?: AppTextColor;
   onPress?: () => void;
@@ -37,7 +37,7 @@ export function AppListItem({
       onPress={onPress}
       disabled={!onPress}
       accessibilityRole={onPress ? 'button' : undefined}
-      accessibilityLabel={`${title}, ${supporting}, ${trailing}`}
+      accessibilityLabel={[title, supporting, trailing].filter(Boolean).join(', ')}
       android_ripple={{ color: `${colors.primary}22` }}
       style={styles.row}
     >
@@ -54,9 +54,16 @@ export function AppListItem({
           {supporting}
         </AppText>
       </View>
-      <AppText variant="bodyStrong" color={trailingColor} numberOfLines={1} style={styles.trailing}>
-        {trailing}
-      </AppText>
+      {trailing ? (
+        <AppText
+          variant="bodyStrong"
+          color={trailingColor}
+          numberOfLines={1}
+          style={styles.trailing}
+        >
+          {trailing}
+        </AppText>
+      ) : null}
     </Pressable>
   );
 }
