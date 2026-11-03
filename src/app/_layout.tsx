@@ -13,6 +13,10 @@ function RootStack() {
         <Stack.Screen name="index" />
         <Stack.Screen name="clientas" />
         <Stack.Screen name="productos" />
+        <Stack.Screen name="ventas" />
+        <Stack.Screen name="agenda" />
+        <Stack.Screen name="metas" />
+        <Stack.Screen name="equipo" />
       </Stack.Protected>
       <Stack.Protected guard={!session}>
         <Stack.Screen name="login" />
