@@ -4,11 +4,15 @@ import type { ClientRepository, RepoResult } from '../domain/clientRepository';
 import { CLIENT_COLUMNS, toClient, toWritableRow, type ClientRow } from './clientMapper';
 
 const GENERIC_ERROR = 'No pudimos completar la acción. Revisá tu conexión y probá de nuevo.';
+const HAS_SALES =
+  'Esta clienta tiene ventas registradas, por eso no se puede eliminar. Si ya no la necesitás, podés dejarla como está.';
 
-function fail<T>(error: unknown): RepoResult<T> {
+function fail<T>(error: object): RepoResult<T> {
   // El detalle técnico va solo al log; la usuaria ve un mensaje claro.
   console.warn('[clients] error de Supabase', error);
-  return { ok: false, message: GENERIC_ERROR };
+  // 23503 = clave foránea: la clienta está en ventas (las ventas la protegen con `restrict`).
+  const code = 'code' in error ? error.code : undefined;
+  return { ok: false, message: code === '23503' ? HAS_SALES : GENERIC_ERROR };
 }
 
 export const supabaseClientRepository: ClientRepository = {
