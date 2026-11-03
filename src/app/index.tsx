@@ -83,6 +83,11 @@ export default function Index() {
         </View>
 
         <View style={styles.sectionHeader}>
+          <AppText variant="title">Productos</AppText>
+          <AppButton label="Ver todos" variant="text" onPress={() => router.push('/productos')} />
+        </View>
+
+        <View style={styles.sectionHeader}>
           <AppText variant="title">Clientas</AppText>
           <AppButton label="Ver todas" variant="text" onPress={() => router.push('/clientas')} />
         </View>

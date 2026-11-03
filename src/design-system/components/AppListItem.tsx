@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useTheme } from '../theme';
@@ -10,6 +11,8 @@ type AppListItemProps = {
   trailing?: string;
   supportingColor?: AppTextColor;
   trailingColor?: AppTextColor;
+  /** Foto que reemplaza a las iniciales en el avatar (por ejemplo, la de un producto). */
+  imageUri?: string;
   onPress?: () => void;
 };
 
@@ -28,6 +31,7 @@ export function AppListItem({
   trailing,
   supportingColor = 'onSurfaceVariant',
   trailingColor = 'onSurface',
+  imageUri,
   onPress,
 }: AppListItemProps) {
   const { colors } = useTheme();
@@ -42,9 +46,13 @@ export function AppListItem({
       style={styles.row}
     >
       <View style={[styles.avatar, { backgroundColor: colors.primaryContainer }]}>
-        <AppText variant="bodyStrong" color="onPrimaryContainer">
-          {initials(title)}
-        </AppText>
+        {imageUri ? (
+          <Image source={{ uri: imageUri }} style={styles.avatarImage} contentFit="cover" />
+        ) : (
+          <AppText variant="bodyStrong" color="onPrimaryContainer">
+            {initials(title)}
+          </AppText>
+        )}
       </View>
       <View style={styles.texts}>
         <AppText variant="body" numberOfLines={1}>
@@ -82,7 +90,9 @@ const styles = StyleSheet.create({
     borderRadius: (minTouchTarget - 8) / 2,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
+  avatarImage: { width: minTouchTarget - 8, height: minTouchTarget - 8 },
   texts: { flex: 1 },
   trailing: { fontVariant: ['tabular-nums'] },
 });

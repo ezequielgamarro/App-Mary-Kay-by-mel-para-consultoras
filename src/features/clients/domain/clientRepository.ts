@@ -1,6 +1,8 @@
+import type { RepoResult } from '@/core/data/repoResult';
+
 import type { Client, ClientInput } from './client';
 
-export type RepoResult<T> = { ok: true; data: T } | { ok: false; message: string };
+export type { RepoResult };
 
 /** Contrato de acceso a datos de clientas: la UI y los hooks solo conocen esta interfaz. */
 export interface ClientRepository {

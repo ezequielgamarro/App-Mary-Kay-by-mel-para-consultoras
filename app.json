@@ -33,7 +33,15 @@
           "imageWidth": 76
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Bella Gestión necesita acceder a tus fotos para elegir la imagen de un producto.",
+          "cameraPermission": "Bella Gestión necesita la cámara para sacar la foto de un producto.",
+          "microphonePermission": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

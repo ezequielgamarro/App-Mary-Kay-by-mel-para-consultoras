@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { normalizeSearch } from '@/core/text/normalizeSearch';
+
 export type Client = {
   id: string;
   nombre: string;
@@ -104,11 +106,10 @@ export function whatsappUrl(telefono: string | null, mensaje?: string): string |
 
 /** Filtra por nombre o teléfono, sin distinguir mayúsculas ni tildes. */
 export function filterClients(clients: Client[], query: string): Client[] {
-  const normalize = (text: string) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-  const needle = normalize(query.trim());
+  const needle = normalizeSearch(query);
   if (!needle) return clients;
   return clients.filter(
     (client) =>
-      normalize(client.nombre).includes(needle) || (client.telefono ?? '').includes(needle),
+      normalizeSearch(client.nombre).includes(needle) || (client.telefono ?? '').includes(needle),
   );
 }
