@@ -1,56 +1,75 @@
-# Welcome to your Expo app 👋
+# Bella Gestión
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App móvil (Android primero) para consultoras de venta directa de cosmética en Argentina: ventas con cuenta corriente, stock, clientas, pedidos, gastos, metas, agenda, notas y equipo, todo en pesos y con el inicio pensado para tener «los números claros».
 
-## Get started
+> «Bella Gestión» es un nombre de trabajo. No se verificó su disponibilidad legal y la app no usa el nombre, el logo ni la corona de ninguna marca.
 
-1. Install dependencies
+## Qué hace hoy
 
-   ```bash
-   npm install
-   ```
+| Módulo    | Qué resuelve                                                                                                          |
+| --------- | --------------------------------------------------------------------------------------------------------------------- |
+| Inicio    | Vendido del mes, ganancia, gastos y ganancia neta, avance de la meta, por cobrar, valor del stock y clientas deudoras |
+| Ventas    | Venta con varios productos, pagos parciales, vencimiento, cobros posteriores y anulación (devuelve el stock)          |
+| Clientas  | Ficha, cumpleaños y cuenta corriente                                                                                  |
+| Productos | Stock, costo, precio, stock mínimo y foto de referencia                                                               |
+| Pedidos   | Sugerencia de reposición según stock y ventas, simulación de costo y ganancia, historial y recepción que suma stock   |
+| Gastos    | Gastos por tipo y total del mes                                                                                       |
+| Metas     | Meta mensual de ventas y de ganancia                                                                                  |
+| Agenda    | Cobros por vencer, cumpleaños y tareas propias                                                                        |
+| Notas     | Notas libres con buscador                                                                                             |
+| Equipo    | Código de invitación; la directora ve solo los totales que cada integrante acepta compartir                           |
 
-2. Start the app
+Sin conexión se ven los últimos datos cargados en el teléfono, con un aviso. Las altas y cambios necesitan conexión.
 
-   ```bash
-   npx expo start
-   ```
+## Stack
 
-In the output, you'll find options to open the app in a
+Expo SDK 58 · React Native 0.88 · Expo Router · TypeScript estricto · Supabase (Postgres, Auth, Storage, RLS) · Zod · Jest + Testing Library.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Puesta en marcha
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Requisitos: Node 22 y la app **Expo Go** en el teléfono (o un emulador Android).
 
 ```bash
-npm run reset-project
+npm install
+# creá el archivo .env con las dos variables públicas de Supabase (ver abajo)
+npm start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+`npm start` muestra un código QR para abrir la app en Expo Go. Si el teléfono y la computadora están en la misma red Wi‑Fi, `npx expo start --lan` suele ser lo más directo. Las variables y su significado están en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md#configuración-local-env). Nunca se pone en el cliente la clave `service_role`.
 
-### Other setup steps
+## Comandos
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+| Comando                           | Para qué                               |
+| --------------------------------- | -------------------------------------- |
+| `npm run typecheck`               | Verificación de tipos (`tsc --noEmit`) |
+| `npm run lint`                    | ESLint, incluida la regla de capas     |
+| `npm test`                        | Pruebas con Jest                       |
+| `npx prettier --check <archivos>` | Formato de los archivos que tocaste    |
 
-## Learn more
+El CI (`.github/workflows/ci.yml`) corre tipos, lint y pruebas en cada push, y el formato de los archivos cambiados en cada pull request.
 
-To learn more about developing your project with Expo, look at the following resources:
+> Los tipos de rutas de Expo Router (`.expo/types/router.d.ts`) se regeneran al iniciar el servidor de desarrollo. Si `tsc` marca rutas nuevas como inexistentes, borrá ese archivo e iniciá `npx expo start` una vez.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Base de datos
 
-## Join the community
+Las migraciones están en `supabase/migrations/` y las pruebas de seguridad (RLS y reglas de negocio) en `supabase/tests/`. Cada prueba corre dentro de una transacción que termina en `ROLLBACK`: no deja datos. Toda tabla tiene RLS y cada consultora ve solo lo suyo. Detalle en [docs/SEGURIDAD.md](docs/SEGURIDAD.md).
 
-Join our community of developers creating universal apps.
+## Estructura
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```
+src/app/            rutas de Expo Router (solo composición)
+src/core/           cliente Supabase, fechas, dinero, copia local
+src/design-system/  tokens, tema y componentes base (Material 3)
+src/features/<x>/   domain · data · application · ui
+supabase/           migraciones y pruebas SQL
+docs/               arquitectura y seguridad
+```
+
+Las reglas de dependencias y las convenciones (dinero en centavos, es-AR, errores sin detalle técnico) están en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
+
+## Pendiente antes de publicar
+
+- Verificar la disponibilidad legal del nombre y definir el mínimo de integrantes de una directora.
+- Probar en más dispositivos Android y generar un build de prueba con EAS.
+- Notificaciones, integración con WhatsApp y acceso biométrico (fase 7 del plan).
+- Totales del inicio calculados en la base (la API devuelve como máximo 1.000 filas por consulta).

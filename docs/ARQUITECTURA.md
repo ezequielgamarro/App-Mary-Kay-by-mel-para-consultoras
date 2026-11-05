@@ -1,12 +1,13 @@
 # Arquitectura
 
-App móvil para consultoras de venta directa. Marca provisoria «MaryKayByMel» (ver [Marca](#marca)).
+App móvil para consultoras de venta directa. Marca provisoria «Bella Gestión» (ver [Marca](#marca)).
 
 ## Stack
 
 - Expo SDK 58, React Native 0.88, Expo Router, TypeScript estricto.
 - Supabase (Postgres, Auth, Storage) con RLS en todas las tablas.
 - Zod para validar entradas. Jest + Testing Library para tests.
+- `expo-sqlite` (almacenamiento clave-valor) para la copia local de lectura.
 - Las versiones exactas están en `package.json`; no se copian acá para no desactualizarlas.
 
 ## Estructura
@@ -53,6 +54,15 @@ Las carpetas `core/` y `features/` se crean con el primer archivo real que las n
 - Nada se aplica a Supabase sin OK explícito; después de cada migración se corre `get_advisors`.
 - Checklist aplicada: [SEGURIDAD.md](./SEGURIDAD.md).
 
+## Copia local (sin conexión)
+
+`useLoad(load, cacheKey)` guarda en el teléfono (`core/data/offlineCache.ts`, sobre `expo-sqlite/kv-store`) lo último que cargó bien. Si una carga falla, muestra esa copia con `stale: true` y la pantalla avisa «Sin conexión». Reglas:
+
+- Es solo lectura: ninguna alta, cambio o baja se guarda sin conexión (devuelven el error de siempre).
+- La copia pertenece a una usuaria: `bindCacheToUser` (en `SessionProvider`) la borra al cerrar sesión o si entra otra persona.
+- Cualquier falla del almacenamiento se ignora; sin copia, la app se comporta como antes.
+- La clave es estable por recurso (`clients`, `sale:<id>`, etc.); solo se guardan datos ya mapeados a JSON simple.
+
 ## Marca
 
 «Bella Gestión» es un nombre de trabajo (2026-10-30): no se verificó su disponibilidad legal. No se usa el nombre «Mary Kay», su logo ni su corona, porque es marca registrada y bloquea publicar en Play Store.
@@ -61,14 +71,16 @@ Identidad visual: la salida estándar de la categoría, Material 3 con un rosa p
 
 ## Fases
 
-0. Cimientos (esta fase): tooling, design system, CI, docs, Supabase con `profiles` + Auth + RLS.
-1. Clientas, Agenda e Inicio (dashboard).
-2. Stock, importación Excel/CSV y exportación PDF.
-3. Ventas, pagos parciales, presupuestos, pedidos por encargo y cierre de caja.
-4. Pedidos (sugerencia y simulación) y alertas de stock.
-5. Metas y Gastos.
-6. Notas y Equipo/Directoras.
-7. Offline, notificaciones, WhatsApp, biométrico, pulido y build de prueba con EAS.
+Estado al 2026-11-05: las fases 0 a 6 están construidas; de la 7 hay copia local de lectura, README e identidad visual.
+
+0. Cimientos: tooling, design system, CI, docs, Supabase con `profiles` + Auth + RLS. ✔
+1. Clientas, Agenda e Inicio (dashboard). ✔
+2. Stock con foto de referencia. ✔ (pendiente: importación Excel/CSV y exportación PDF)
+3. Ventas con cuenta corriente, pagos parciales y anulación. ✔ (pendiente: presupuestos, pedidos por encargo y cierre de caja)
+4. Pedidos (sugerencia, simulación, historial y recepción) y alertas de stock. ✔
+5. Metas y Gastos. ✔
+6. Notas y Equipo/Directoras. ✔
+7. Offline de lectura, README e ícono. ✔ (pendiente: notificaciones, WhatsApp, biométrico, cola de escritura sin conexión y build de prueba con EAS)
 
 ## Configuración local (`.env`)
 
