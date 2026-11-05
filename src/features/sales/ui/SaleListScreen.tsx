@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { formatDateAr, todayIso } from '@/core/date/dates';
 import { formatArs } from '@/core/money/formatArs';
 import {
+  AppNotice,
   AppButton,
   AppCard,
   AppFab,
@@ -42,6 +43,9 @@ export function SaleListScreen() {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.background }]}>
       <AppTopBar title="Ventas" />
+      {state.status === 'ready' && state.stale ? (
+        <AppNotice message="Sin conexión: ves lo último que se guardó en este teléfono." />
+      ) : null}
 
       {state.status === 'loading' ? (
         <View style={styles.center}>

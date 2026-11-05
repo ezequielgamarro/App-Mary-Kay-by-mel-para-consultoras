@@ -1,5 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react-native';
 
+import type { ExpenseRepository } from '@/features/expenses/domain/expenseRepository';
 import type { GoalRepository } from '@/features/goals/domain/goalRepository';
 import type { ProductRepository } from '@/features/products/domain/productRepository';
 import type { Sale } from '@/features/sales/domain/sale';
@@ -9,6 +10,9 @@ import { useHomeSummary } from './useHomeSummary';
 
 // Evita cargar el cliente real de Supabase (exige variables de entorno) en los tests.
 jest.mock('@/features/sales/data/supabaseSaleRepository', () => ({ supabaseSaleRepository: {} }));
+jest.mock('@/features/expenses/data/supabaseExpenseRepository', () => ({
+  supabaseExpenseRepository: {},
+}));
 jest.mock('@/features/goals/data/supabaseGoalRepository', () => ({ supabaseGoalRepository: {} }));
 jest.mock('@/features/products/data/supabaseProductRepository', () => ({
   supabaseProductRepository: {},
@@ -32,6 +36,7 @@ function repos(
   sales: Partial<SaleRepository> = {},
   products: Partial<ProductRepository> = {},
   goals: Partial<GoalRepository> = {},
+  expenses: Partial<ExpenseRepository> = {},
 ) {
   return {
     sales: {
@@ -50,6 +55,16 @@ function repos(
       }),
       ...goals,
     } as unknown as GoalRepository,
+    expenses: {
+      list: jest.fn().mockResolvedValue({
+        ok: true,
+        data: [
+          { id: 'e', fecha: '2026-11-03', concepto: 'x', categoria: 'otros', montoCentavos: 20000 },
+          { id: 'f', fecha: '2026-10-30', concepto: 'y', categoria: 'otros', montoCentavos: 99999 },
+        ],
+      }),
+      ...expenses,
+    } as unknown as ExpenseRepository,
   };
 }
 
@@ -66,6 +81,8 @@ describe('useHomeSummary', () => {
         vendidoMesCentavos: 500000,
         porCobrarCentavos: 500000,
         gananciaMesCentavos: 120000,
+        gastosMesCentavos: 20000,
+        gananciaNetaCentavos: 100000,
         meta: { ventasPct: 50 },
       },
     });

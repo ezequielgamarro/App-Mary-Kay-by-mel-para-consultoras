@@ -2,6 +2,9 @@ import { useCallback } from 'react';
 
 import { useLoad } from '@/core/data/useLoad';
 import { todayIso } from '@/core/date/dates';
+import { supabaseExpenseRepository } from '@/features/expenses/data/supabaseExpenseRepository';
+import { monthExpensesTotal } from '@/features/expenses/domain/expense';
+import type { ExpenseRepository } from '@/features/expenses/domain/expenseRepository';
 import { supabaseGoalRepository } from '@/features/goals/data/supabaseGoalRepository';
 import { monthStart } from '@/features/goals/domain/goal';
 import type { GoalRepository } from '@/features/goals/domain/goalRepository';
@@ -16,12 +19,14 @@ type Repositories = {
   sales: SaleRepository;
   products: ProductRepository;
   goals: GoalRepository;
+  expenses: ExpenseRepository;
 };
 
 const DEFAULT_REPOSITORIES: Repositories = {
   sales: supabaseSaleRepository,
   products: supabaseProductRepository,
   goals: supabaseGoalRepository,
+  expenses: supabaseExpenseRepository,
 };
 
 /** Cifras reales del inicio, calculadas con las ventas y productos de la consultora. */
@@ -32,23 +37,26 @@ export function useHomeSummary(
   const load = useCallback(async () => {
     const now = today();
     const month = monthStart(now);
-    const [sales, products, profit, goal] = await Promise.all([
+    const [sales, products, profit, goal, expenses] = await Promise.all([
       repositories.sales.list(),
       repositories.products.list(),
       repositories.sales.profitSince(month),
       repositories.goals.get(month),
+      repositories.expenses.list(),
     ]);
     if (!sales.ok) return sales;
     if (!products.ok) return products;
     if (!profit.ok) return profit;
     if (!goal.ok) return goal;
+    if (!expenses.ok) return expenses;
     return {
       ok: true as const,
       data: buildHomeSummary(sales.data, products.data, now, {
         gananciaMesCentavos: profit.data,
         goal: goal.data,
+        gastosMesCentavos: monthExpensesTotal(expenses.data, now),
       }),
     };
   }, [repositories, today]);
-  return useLoad<HomeSummary>(load);
+  return useLoad<HomeSummary>(load, 'home');
 }

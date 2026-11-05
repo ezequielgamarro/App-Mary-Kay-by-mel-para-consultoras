@@ -17,6 +17,9 @@ function RootStack() {
         <Stack.Screen name="agenda" />
         <Stack.Screen name="metas" />
         <Stack.Screen name="equipo" />
+        <Stack.Screen name="pedidos" />
+        <Stack.Screen name="gastos" />
+        <Stack.Screen name="notas" />
       </Stack.Protected>
       <Stack.Protected guard={!session}>
         <Stack.Screen name="login" />

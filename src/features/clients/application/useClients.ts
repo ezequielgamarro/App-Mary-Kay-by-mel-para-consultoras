@@ -8,7 +8,7 @@ import type { ClientRepository, RepoResult } from '../domain/clientRepository';
 
 export function useClientList(repository: ClientRepository = supabaseClientRepository) {
   const load = useCallback(() => repository.list(), [repository]);
-  return useLoad<Client[]>(load);
+  return useLoad<Client[]>(load, 'clients');
 }
 
 export function useClient(
@@ -22,7 +22,7 @@ export function useClient(
         : Promise.resolve<RepoResult<Client | null>>({ ok: true, data: null }),
     [id, repository],
   );
-  return useLoad<Client | null>(load);
+  return useLoad<Client | null>(load, id ? `client:${id}` : undefined);
 }
 
 export type SaveResult =

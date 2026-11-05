@@ -80,12 +80,26 @@ describe('buildHomeSummary con metas', () => {
   });
 });
 
+describe('buildHomeSummary con gastos', () => {
+  it('resta los gastos de la ganancia y permite un resultado negativo', () => {
+    const summary = buildHomeSummary([], [], TODAY, {
+      gananciaMesCentavos: 100000,
+      goal: null,
+      gastosMesCentavos: 130000,
+    });
+    expect(summary.gastosMesCentavos).toBe(130000);
+    expect(summary.gananciaNetaCentavos).toBe(-30000);
+  });
+});
+
 describe('buildHomeSummary', () => {
   it('sin datos devuelve todo en cero', () => {
     expect(buildHomeSummary([], [], TODAY)).toEqual({
       vendidoMesCentavos: 0,
       ventasMes: 0,
       gananciaMesCentavos: 0,
+      gastosMesCentavos: 0,
+      gananciaNetaCentavos: 0,
       meta: null,
       porCobrarCentavos: 0,
       valorStockCentavos: 0,

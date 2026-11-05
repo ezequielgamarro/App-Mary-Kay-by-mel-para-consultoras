@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { signOut } from '@/core/auth/actions';
 import { formatArs } from '@/core/money/formatArs';
 import {
+  AppNotice,
   AppButton,
   AppCard,
   AppFab,
@@ -59,6 +60,9 @@ export function HomeScreen() {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.background }]}>
       <AppTopBar title="Bella Gestión" elevated={scrolled} />
+      {state.status === 'ready' && state.stale ? (
+        <AppNotice message="Sin conexión: ves lo último que se guardó en este teléfono." />
+      ) : null}
       <ScrollView
         contentContainerStyle={styles.content}
         scrollEventThrottle={16}
@@ -92,6 +96,12 @@ export function HomeScreen() {
                 {state.data.ventasMes === 1 ? '1 venta' : `${state.data.ventasMes} ventas`} ·
                 ganancia {formatArs(state.data.gananciaMesCentavos)}
               </AppText>
+              {state.data.gastosMesCentavos > 0 ? (
+                <AppText variant="body" color="onPrimary">
+                  Gastos {formatArs(state.data.gastosMesCentavos)} · ganancia neta{' '}
+                  {formatArs(state.data.gananciaNetaCentavos)}
+                </AppText>
+              ) : null}
               {state.data.meta ? (
                 <>
                   <AppProgress value={state.data.meta.ventasPct} tone="onPrimary" />
@@ -178,6 +188,18 @@ export function HomeScreen() {
         <View style={styles.sectionHeader}>
           <AppText variant="title">Ventas</AppText>
           <AppButton label="Ver todas" variant="text" onPress={() => router.push('/ventas')} />
+        </View>
+        <View style={styles.sectionHeader}>
+          <AppText variant="title">Pedido</AppText>
+          <AppButton label="Armar pedido" variant="text" onPress={() => router.push('/pedidos')} />
+        </View>
+        <View style={styles.sectionHeader}>
+          <AppText variant="title">Gastos</AppText>
+          <AppButton label="Ver gastos" variant="text" onPress={() => router.push('/gastos')} />
+        </View>
+        <View style={styles.sectionHeader}>
+          <AppText variant="title">Notas</AppText>
+          <AppButton label="Ver notas" variant="text" onPress={() => router.push('/notas')} />
         </View>
         <View style={styles.sectionHeader}>
           <AppText variant="title">Productos</AppText>

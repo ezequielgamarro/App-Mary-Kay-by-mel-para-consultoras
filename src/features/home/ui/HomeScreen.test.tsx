@@ -20,6 +20,8 @@ const summary: HomeSummary = {
   vendidoMesCentavos: 61230000,
   ventasMes: 12,
   gananciaMesCentavos: 20000000,
+  gastosMesCentavos: 0,
+  gananciaNetaCentavos: 20000000,
   meta: {
     ventasMetaCentavos: 90000000,
     ventasPct: 68,
@@ -53,6 +55,21 @@ beforeEach(() => {
 });
 
 describe('HomeScreen', () => {
+  it('no muestra gastos si no hay en el mes', async () => {
+    mockState({ status: 'ready', data: summary });
+    await render(<HomeScreen />);
+    expect(screen.queryByText(/ganancia neta/)).toBeNull();
+  });
+
+  it('muestra los gastos y la ganancia neta cuando hay gastos en el mes', async () => {
+    mockState({
+      status: 'ready',
+      data: { ...summary, gastosMesCentavos: 5000000, gananciaNetaCentavos: 15000000 },
+    });
+    await render(<HomeScreen />);
+    expect(screen.getByText(/Gastos \$ 50.000 · ganancia neta \$ 150.000/)).toBeTruthy();
+  });
+
   it('muestra las cifras reales del mes y la meta', async () => {
     mockState({ status: 'ready', data: summary });
     await render(<HomeScreen />);

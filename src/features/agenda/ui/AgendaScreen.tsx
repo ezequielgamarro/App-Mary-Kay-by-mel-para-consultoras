@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { formatDateAr } from '@/core/date/dates';
 import { confirmDestructive } from '@/core/ui/confirm';
 import {
+  AppNotice,
   AppButton,
   AppCard,
   AppFab,
@@ -80,6 +81,9 @@ export function AgendaScreen() {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.background }]}>
       <AppTopBar title="Agenda" />
+      {state.status === 'ready' && state.stale ? (
+        <AppNotice message="Sin conexión: ves lo último que se guardó en este teléfono." />
+      ) : null}
 
       {state.status === 'loading' ? (
         <View style={styles.center}>

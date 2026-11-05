@@ -4,6 +4,7 @@ import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
+  AppNotice,
   AppButton,
   AppFab,
   AppListItem,
@@ -40,6 +41,9 @@ export function ClientListScreen() {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.background }]}>
       <AppTopBar title="Clientas" />
+      {state.status === 'ready' && state.stale ? (
+        <AppNotice message="Sin conexión: ves lo último que se guardó en este teléfono." />
+      ) : null}
 
       {state.status === 'loading' ? (
         <View style={styles.center}>

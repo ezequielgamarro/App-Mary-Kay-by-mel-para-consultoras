@@ -2,6 +2,7 @@ export { AppButton } from './components/AppButton';
 export { AppCard } from './components/AppCard';
 export { AppFab } from './components/AppFab';
 export { AppListItem } from './components/AppListItem';
+export { AppNotice } from './components/AppNotice';
 export { AppProgress } from './components/AppProgress';
 export { AppText } from './components/AppText';
 export { AppTextField } from './components/AppTextField';

@@ -14,6 +14,8 @@ export interface SaleRepository {
   removePayment(paymentId: string): Promise<RepoResult<null>>;
   /** Ganancia (precio menos costo guardado) de lo vendido en ventas activas desde `from` (AAAA-MM-DD). */
   profitSince(from: string): Promise<RepoResult<number>>;
+  /** Unidades vendidas por producto (id) en ventas activas desde `from` (AAAA-MM-DD). */
+  soldUnitsSince(from: string): Promise<RepoResult<Record<string, number>>>;
   /** Anula la venta y devuelve el stock de los productos vendidos. */
   cancel(saleId: string): Promise<RepoResult<null>>;
 }

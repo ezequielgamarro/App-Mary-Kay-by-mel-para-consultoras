@@ -17,7 +17,7 @@ import type { RepoResult, SaleRepository } from '../domain/saleRepository';
 
 export function useSaleList(repository: SaleRepository = supabaseSaleRepository) {
   const load = useCallback(() => repository.list(), [repository]);
-  return useLoad<Sale[]>(load);
+  return useLoad<Sale[]>(load, 'sales');
 }
 
 export function useSale(
@@ -31,7 +31,7 @@ export function useSale(
         : Promise.resolve<RepoResult<SaleDetail | null>>({ ok: true, data: null }),
     [id, repository],
   );
-  return useLoad<SaleDetail | null>(load);
+  return useLoad<SaleDetail | null>(load, id ? `sale:${id}` : undefined);
 }
 
 export type RegisterResult =

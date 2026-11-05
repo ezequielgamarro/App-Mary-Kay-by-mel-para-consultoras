@@ -23,13 +23,21 @@ export type GoalProgress = {
 };
 
 /** Datos que no salen de las ventas ni de los productos: ganancia del mes y meta definida. */
-export type HomeExtras = { gananciaMesCentavos: number; goal: Goal | null };
+export type HomeExtras = {
+  gananciaMesCentavos: number;
+  goal: Goal | null;
+  /** Gastos cargados en el mes (0 si no cargó ninguno). */
+  gastosMesCentavos?: number;
+};
 
 export type HomeSummary = {
   /** Total vendido en el mes de `today` (ventas activas). */
   vendidoMesCentavos: number;
   ventasMes: number;
   gananciaMesCentavos: number;
+  gastosMesCentavos: number;
+  /** Ganancia del mes menos los gastos del mes (puede ser negativa). */
+  gananciaNetaCentavos: number;
   /** Avance hacia la meta del mes, o null si todavía no la definió. */
   meta: GoalProgress | null;
   porCobrarCentavos: number;
@@ -100,6 +108,8 @@ export function buildHomeSummary(
     vendidoMesCentavos,
     ventasMes: thisMonth.length,
     gananciaMesCentavos: extras.gananciaMesCentavos,
+    gastosMesCentavos: extras.gastosMesCentavos ?? 0,
+    gananciaNetaCentavos: extras.gananciaMesCentavos - (extras.gastosMesCentavos ?? 0),
     meta: extras.goal
       ? {
           ventasMetaCentavos: extras.goal.ventasCentavos,

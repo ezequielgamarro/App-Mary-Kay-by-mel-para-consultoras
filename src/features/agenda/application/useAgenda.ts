@@ -38,7 +38,7 @@ export function useAgenda(
     const items = buildAgenda({ tasks: tasks.data, sales: sales.data, clients: clients.data }, now);
     return { ok: true as const, data: { items, today: now } };
   }, [repositories, today]);
-  return useLoad<{ items: AgendaItem[]; today: string }>(load);
+  return useLoad<{ items: AgendaItem[]; today: string }>(load, 'agenda');
 }
 
 export type SaveTaskResult =

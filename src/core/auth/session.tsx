@@ -1,6 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
+import { bindCacheToUser } from '../data/offlineCache';
 import { supabase } from '../supabase/client';
 
 type SessionState = {
@@ -18,9 +19,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     let active = true;
     supabase.auth.getSession().then(({ data }) => {
       if (active) setState({ session: data.session, loading: false });
+      void bindCacheToUser(data.session?.user.id ?? null);
     });
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       setState({ session, loading: false });
+      void bindCacheToUser(session?.user.id ?? null);
     });
     return () => {
       active = false;

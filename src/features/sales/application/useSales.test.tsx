@@ -31,6 +31,7 @@ function fakeRepo(overrides: Partial<SaleRepository> = {}): SaleRepository {
     addPayment: jest.fn().mockResolvedValue({ ok: true, data: null }),
     removePayment: jest.fn().mockResolvedValue({ ok: true, data: null }),
     profitSince: jest.fn().mockResolvedValue({ ok: true, data: 0 }),
+    soldUnitsSince: jest.fn().mockResolvedValue({ ok: true, data: {} }),
     cancel: jest.fn().mockResolvedValue({ ok: true, data: null }),
     ...overrides,
   };

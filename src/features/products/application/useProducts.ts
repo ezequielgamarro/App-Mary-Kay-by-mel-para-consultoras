@@ -13,7 +13,7 @@ import type { ProductRepository, RepoResult } from '../domain/productRepository'
 
 export function useProductList(repository: ProductRepository = supabaseProductRepository) {
   const load = useCallback(() => repository.list(), [repository]);
-  return useLoad<Product[]>(load);
+  return useLoad<Product[]>(load, 'products');
 }
 
 export function useProduct(
@@ -27,7 +27,7 @@ export function useProduct(
         : Promise.resolve<RepoResult<Product | null>>({ ok: true, data: null }),
     [id, repository],
   );
-  return useLoad<Product | null>(load);
+  return useLoad<Product | null>(load, id ? `product:${id}` : undefined);
 }
 
 /**

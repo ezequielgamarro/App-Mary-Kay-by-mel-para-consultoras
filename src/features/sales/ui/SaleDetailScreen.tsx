@@ -15,6 +15,7 @@ import { formatArs } from '@/core/money/formatArs';
 import { centsToInput } from '@/core/money/parseArs';
 import { confirmDestructive } from '@/core/ui/confirm';
 import {
+  AppNotice,
   AppButton,
   AppCard,
   AppText,
@@ -46,6 +47,9 @@ export function SaleDetailScreen({ saleId }: Props) {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.background }]}>
       <AppTopBar title="Venta" />
+      {state.status === 'ready' && state.stale ? (
+        <AppNotice message="Sin conexión: ves lo último que se guardó en este teléfono." />
+      ) : null}
 
       {state.status === 'loading' ? (
         <View style={styles.center}>

@@ -111,6 +111,27 @@ export const supabaseSaleRepository: SaleRepository = {
     }
   },
 
+  async soldUnitsSince(from) {
+    // Se pagina porque la Data API devuelve como máximo 1000 filas por consulta.
+    const PAGE = 1000;
+    const units: Record<string, number> = {};
+    for (let start = 0; ; start += PAGE) {
+      const { data, error } = await supabase
+        .from('sale_items')
+        .select('product_id, cantidad, sales!inner(estado, vendida_el)')
+        .eq('sales.estado', 'activa')
+        .gte('sales.vendida_el', from)
+        .not('product_id', 'is', null)
+        .order('created_at', { ascending: true })
+        .order('id', { ascending: true })
+        .range(start, start + PAGE - 1)
+        .returns<{ product_id: string; cantidad: number }[]>();
+      if (error) return fail(error);
+      for (const row of data) units[row.product_id] = (units[row.product_id] ?? 0) + row.cantidad;
+      if (data.length < PAGE) return { ok: true, data: units };
+    }
+  },
+
   async cancel(saleId) {
     const { error } = await supabase.from('sales').update({ estado: 'anulada' }).eq('id', saleId);
     if (error) return fail(error);
