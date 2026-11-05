@@ -191,9 +191,7 @@ export function HomeScreen() {
         <AppButton label="Cerrar sesión" variant="outlined" onPress={() => void signOut()} />
       </ScrollView>
 
-      <View style={styles.fab}>
-        <AppFab label="Registrar venta" icon="add" onPress={() => router.push('/ventas/nueva')} />
-      </View>
+      <AppFab label="Registrar venta" icon="add" onPress={() => router.push('/ventas/nueva')} />
     </SafeAreaView>
   );
 }
@@ -211,5 +209,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: spacing.sm,
   },
-  fab: { position: 'absolute', right: spacing.md, bottom: spacing.md },
 });

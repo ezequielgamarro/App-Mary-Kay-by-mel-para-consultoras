@@ -161,9 +161,7 @@ export function AgendaScreen() {
         </ScrollView>
       ) : null}
 
-      <View style={styles.fab}>
-        <AppFab label="Nueva tarea" icon="add" onPress={() => router.push('/agenda/nueva')} />
-      </View>
+      <AppFab label="Nueva tarea" icon="add" onPress={() => router.push('/agenda/nueva')} />
     </SafeAreaView>
   );
 }
@@ -184,5 +182,4 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   centerText: { textAlign: 'center' },
-  fab: { position: 'absolute', right: spacing.md, bottom: spacing.md },
 });

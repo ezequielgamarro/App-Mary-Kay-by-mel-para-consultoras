@@ -129,9 +129,7 @@ export function ProductListScreen() {
       ) : null}
 
       {state.status === 'ready' && state.data.length > 0 ? (
-        <View style={styles.fab}>
-          <AppFab label="Nuevo producto" icon="add" onPress={goToNew} />
-        </View>
+        <AppFab label="Nuevo producto" icon="add" onPress={goToNew} />
       ) : null}
     </SafeAreaView>
   );
@@ -150,5 +148,4 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   centerText: { textAlign: 'center' },
-  fab: { position: 'absolute', right: spacing.md, bottom: spacing.md },
 });
